@@ -1,9 +1,19 @@
+import java.util.Scanner;
+
 
 public class main {
 
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		Scanner sc = new Scanner(System.in);
+		TextBuddy textbuddy = new TextBuddy();
+		
+		while(textbuddy.run(sc) != -1);
+		textbuddy.exit();
+		sc.close();
+		
+		
 	}
 
 }
