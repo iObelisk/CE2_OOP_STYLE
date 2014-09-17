@@ -16,7 +16,10 @@ public class TextBuddy {
 
 	/*Declarations of Constants for "Magic Strings" */
 	private static final String MSG_NO_CMD = "No such command \"%s\" " ;
-	
+	private static final String MSG_CONTENT_ADDED = "Content added";
+	private static final String MSG_CONTENT_DELETE = "Content deleted";
+	private static final String MSG_CONTENT_CLEARED = "Content cleared";
+	private static final String MSG_CONTENT_DISPLAY = "Content displayed";
 	
 	/*Objects*/
 	FileInputOutput dataStore;
@@ -76,7 +79,7 @@ public class TextBuddy {
 	 * TextBuddy()'s "run" is to start the whole programme running.
 	 * 
 	 */
-	public int run(Scanner userInput){
+	public static int run(Scanner userInput){
 		
 		String userCommand = "";
 		
@@ -86,7 +89,7 @@ public class TextBuddy {
 			switch(userCommand)
 			{
 				case CMD_ADD:
-					//addContent(userInput.nextLine());
+					addContent(userInput.nextLine());
 					break;
 	
 				case CMD_DISPLAY:
@@ -122,8 +125,9 @@ public class TextBuddy {
 	 * 
 	 * @throws IOException - if unable to write to fileWriter
 	 */
-	private static void addContent(String data){	
-	
+	public static String addContent(String data){	
+		
+		return MSG_CONTENT_ADDED;
 	}
 	
 	
@@ -134,9 +138,9 @@ public class TextBuddy {
 	 * 
 	 * @throws IOException - if file can't be written to for saving purpose.
 	 */
-	public static void displayContents(){
+	public static String displayContents(){
 		
-		
+		return MSG_CONTENT_DISPLAY;
 	}
 
 	
@@ -147,8 +151,9 @@ public class TextBuddy {
 	 * 
 	 * @throws IOException - if file can't be written to for saving purpose.
 	 */
-	public static void deleteContent(int id){
+	public static String deleteContent(int id){
 		
+		return MSG_CONTENT_DELETE;
 	}
 
 	
@@ -159,8 +164,9 @@ public class TextBuddy {
 	 * 
 	 *
 	 */
-	public static void clearContents(){
+	public static String clearContents(){
 		
+		return MSG_CONTENT_CLEARED;
 	}
 	
 	
