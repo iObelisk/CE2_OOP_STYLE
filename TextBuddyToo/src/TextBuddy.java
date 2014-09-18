@@ -19,12 +19,14 @@ public class TextBuddy {
 	/*Declarations of Constants for "Magic Strings" */
 	private static final String MSG_NO_CMD = "No such command \"%s\" " ;
 	private static final String MSG_CONTENT_ADDED = "added to \"%s\" - \"%s\"";
-	private static final String MSG_EMPTY_CONTENT = "Invalid input after specified command";
+	private static final String MSG_EMPTY_CONTENT = "Invalid input|data - Empty content";
 	private static final String MSG_CONTENT_DELETED = "deleted from \"%s\": \"%s\"";
 	private static final String MSG_CONTENT_CLEARED = "Content cleared";
 	private static final String MSG_EMPTY_FILE = "File \"%s\" is empty";
 	private static final String MSG_INDEX_OUTOFSCOPE = "Index specified out of scope";
 	private static final String MSG_TEXTBUDDY_INITIATED = "Welcome To TextBuddy! Your file \"%s\" is ready for use.";
+	private static final String MSG_WORD_FOUND = " Searched word - \"%s\" is found";
+	private static final String MSG_WORD_NOT_FOUND = " Searched word - \"%s\" is NOT found";
 	
 	/*Objects*/
 	FileInputOutput dataStore;
@@ -246,19 +248,30 @@ public class TextBuddy {
 	/**
 	 * Check if word queried is within the 'add'ed contents
      *
-	 * @param checkString - the string that the user input to query about
+	 * @param queryWord - the string that the user input to query about
 	 * @param datas - the list of contents already 'add'ed to check upon 
 	 * 				  for the queried string
 	 * @throws IOException 
 	 */	
-	public boolean searchWord(String checkString, List<String> datas) throws IOException{
+	public boolean searchWord(String queryWord, List<String> datas) throws IOException{
 		
-		if (checkString == null || checkString.isEmpty() || datas == null || datas.isEmpty()){
+		if (queryWord == null || queryWord.isEmpty() || datas == null || datas.isEmpty()){
 			
+			printMsg(true,MSG_EMPTY_CONTENT);
 			return false;
 		}
-
-		return true;
+		
+		for (String data:datas){
+			
+			if (data.contains(queryWord)){
+				
+				printMsg(true, MSG_WORD_FOUND, queryWord);
+				return true;
+			}
+		}
+		
+		printMsg(true, MSG_WORD_NOT_FOUND, queryWord);
+		return false;
 	}
 	
 	
