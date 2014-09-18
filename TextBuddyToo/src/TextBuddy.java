@@ -41,7 +41,10 @@ public class TextBuddy {
 	
 	
 	/**
-	 * TextBuddy()'s initiator
+	 * TextBuddy()'s initiator, where it request for user to input the 
+	 * file's name, will prompt user if the given name is invalid.
+	 * 
+	 * @param filename - name of the file to be created i.e testfile.txt
 	 * 
 	 */
 	public boolean init(String filename){
@@ -76,21 +79,6 @@ public class TextBuddy {
 		return true;
 	}
 	
-	
-	
-	/**
-	 * TextBuddy()'s "destructor" ensures that open objects are closed if 
-	 * required to close or delete to prevent leak.
-	 * 
-	 */
-	/*
-	private boolean firstRun(String filename){
-
-		System.out.print("Please input your filename: ");
-		
-		return false;
-	}
-	*/
 	
 	
 	/**
