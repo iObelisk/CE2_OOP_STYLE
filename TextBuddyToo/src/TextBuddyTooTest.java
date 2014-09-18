@@ -33,6 +33,7 @@ public class TextBuddyTooTest {
 		dataList.add("test1");
 		
 		assertEquals("Test - 'TextBuddy.searchWord()'",true,testTextBuddySearchWord("test1",dataList));
+		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord("test2",dataList));
 	}
 	
 	
