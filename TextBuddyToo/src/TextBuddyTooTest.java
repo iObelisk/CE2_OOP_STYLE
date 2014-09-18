@@ -24,8 +24,9 @@ public class TextBuddyTooTest {
 		
 		
 		//Test Cases for textBuddy.addContent()
-		assertEquals("Test - 'TextBuddy.addContent()'",false,testTextBuddyAdd(""));
-		assertEquals("Test - 'TextBuddy.addContent()'",false,testTextBuddyAdd("test"));
+		assertEquals("Test - 'TextBuddy.addContent()'",false,testTextBuddyAdd(null));		
+		assertEquals("Test - 'TextBuddy.addContent()'",true,testTextBuddyAdd(""));
+		assertEquals("Test - 'TextBuddy.addContent()'",true,testTextBuddyAdd("test"));
 	}
 	
 	
