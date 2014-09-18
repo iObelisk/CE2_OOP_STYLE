@@ -16,7 +16,9 @@ public class TextBuddyTooTest {
 		assertEquals("Test - 'TextBuddy.addContent()'","Content added",TextBuddy.addContent("haha"));
 		assertEquals("Test - 'TextBuddy.clearContents()'","Content cleared",TextBuddy.clearContents());		
 		assertEquals("Test - 'TextBuddy.displayContents()'","Content displayed",TextBuddy.displayContents());
-		assertEquals("Test - 'TextBuddy.deleteContent()'","Content deleted",TextBuddy.deleteContent(1));		
+		assertEquals("Test - 'TextBuddy.deleteContent()'","Content deleted",TextBuddy.deleteContent(1));	
+		
+		
 	}
 	
 	

@@ -1,19 +1,27 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-
 public class FileInputOutput {
 	
 	
 	private static final String MSG_INVALID_FILENAME = "Not a valid filename, please input a valid filename";
-	
+	private static final String MSG_ADDED_TO_BUFFER = "Data(s) added to buffer";
+	private static final String MSG_EXIT_PROGRAME_FILEIO = "FileInputOutput - 'exit()' called! buffer closed";
+	private static final String MSG_EMPTY_FILE = "%s is empty";	
+	private static final String MSG_FILE_DELETED = "Deleted from \"%s\" - \"%s\" ";
+	//System.out.println("deleted from " + filename + ": \"" + deletedContent + "\"");
+
+			
 	private static String filename;
 	
 	private static File file;
+	private static BufferedWriter fileWriter;
 	
 	
 	/**
@@ -22,6 +30,31 @@ public class FileInputOutput {
 	FileInputOutput(){
 		
 		filename = "";
+		file = null;
+	}
+	
+	
+	
+	/**
+	 * "Destructor" of the 'FileInputOutput'- When exiting the program, 
+	 * closes the BufferedWriter before exiting to prevent leaks.
+	 * 
+	 * @throws IOException - if unable to close Scanner/BufferedWriter
+	 */
+	public String exit() throws IOException{
+		
+		fileWriter.close();		
+		return MSG_EXIT_PROGRAME_FILEIO;
+	}
+	
+	
+	
+	/**
+	 * Request for user's desired filename for the file to be written to.
+	 */
+	private void requestFileName(String tempName){
+		
+		filename = tempName;
 	}
 	
 	
@@ -32,18 +65,19 @@ public class FileInputOutput {
 	 * @return true = valid | false = invalid filename.
 	 * @throws if invalid filename, output a msg to alert user.
 	 */
-	private boolean checkValidFileName(String tempName)
-	{
-		file = new File(tempName);
+	private boolean checkValidFileName(String tempName){
 		
-		try 
-		{
+		requestFileName(tempName);
+		file = new File(filename);
+		
+		try {
+			
 			file.getCanonicalPath();
 			return true;
 		} 
-		catch (IOException e) 
-		{
-			printMsg(MSG_INVALID_FILENAME);
+		catch (IOException e) {
+			
+			returnMsg(true,MSG_INVALID_FILENAME);
 			return false;
 		}
 	}
@@ -55,8 +89,9 @@ public class FileInputOutput {
 	 *
 	 * @throws IOException - if file can't be created (perhaps its opened etc.)
 	 */
-	public boolean createNewFile(){
+	public boolean createNewFile() throws IOException{
 		
+		fileWriter = new BufferedWriter(new FileWriter(file));
 		return true;
 	}
 	
@@ -67,8 +102,9 @@ public class FileInputOutput {
 	 * 
 	 * @throws IOException 
 	 */
-	public boolean writeToFile(){
+	public boolean writeToFile() throws IOException{
 		
+		fileWriter.flush();
 		return true;
 	}
 
@@ -80,7 +116,7 @@ public class FileInputOutput {
 	 * @return the list of data(s)
 	 * @throws IOException 
 	 */
-	private static List<String> getFileContents() throws IOException{
+	private List<String> getFileContents() throws IOException{
 		
 		//Stores current data(s) in file into a List to assist removal/retrival of object.
 		List<String> datas = Files.readAllLines(Paths.get(filename), 
@@ -92,12 +128,87 @@ public class FileInputOutput {
 	
 	
 	/**
-	 * Clear Contents from file before re-writing the data(s) into file.
+	 * 'add' command called by user. Data 'add' is written into the buffer.
+	 * 
+	 * @throws IOException - if unable to write to fileWriter
+	 */
+	private String addContent(String data) throws IOException 
+	{	
+		//Write user 'add'(ed) data into buffer.
+		fileWriter.write(data.trim());
+		fileWriter.newLine();
+		
+		//SHould sys out @ text buddy side
+		//System.out.println("added to " + filename + ": \"" + data.trim() +"\"");
+		
+		return MSG_ADDED_TO_BUFFER;
+	}
+	
+	
+
+	/**
+	 * Deletes the user's selected content.
+	 * 
+	 * @throws IOException - if file can't be written to for saving purpose.
+	 */
+	public String deleteContent(int id) throws IOException{
+		//Should be in TextBuddy.java before calling this function
+		/*
+		// To ensure that user 'add'(s) are written to file first.
+		writeToFile(); 
+		*/
+		//Should be in TextBuddy.java before calling this function
+		/*
+		if((id-1) >= getFileContents().size() || (id-1) < 0) //Checks if input index out of scope
+		{
+			System.out.println("Deleting index out of scope, data does not exist.");
+		}
+		*/
+
+		String deletedContent = "";
+		
+		if(!isEmptyFile())
+		{
+			//Retrieving & Removing user selected data via specified id.
+			List<String> datas = getFileContents();	
+			deletedContent = datas.get(id-1);
+			datas.remove(id-1);
+		
+			//Write updated data (with the deleted item gone).
+			modifyAllContents(datas);
+
+			//Should be in textbuddy class
+			//System.out.println("deleted from " + filename + ": \"" + deletedContent + "\"");
+		}
+		else
+		{
+			return returnMsg(false,MSG_EMPTY_FILE,filename);
+		}
+		
+		return returnMsg(false,MSG_FILE_DELETED,filename,deletedContent);
+	}
+	
+	
+	
+	
+	/**
+	 * Clear All Contents from file before re-writing the new data(s) into file.
 	 * 
 	 * @throws IOException 
 	 */
-	private static void modifyContents(List<String> datas) throws IOException{
-	
+	private void modifyAllContents(List<String> datas) throws IOException{
+		
+		//Clear data from file to prevent duplicates.
+		clearAllContents();
+		
+		//Write new data into the buffer.
+		for(String data:datas)
+		{
+			fileWriter.write(data.trim());
+			fileWriter.newLine();
+		}
+		
+		writeToFile();
 	}
 	
 	
@@ -107,8 +218,10 @@ public class FileInputOutput {
 	 * 
 	 * @throws IOException - if file can't be close/created.
 	 */
-	public static void clearContents() throws IOException{
+	public void clearAllContents() throws IOException{
 		
+		fileWriter.close();
+		createNewFile();
 	}
 	
 	
@@ -116,9 +229,9 @@ public class FileInputOutput {
 	/**
 	 * Checks if file is empty
 	 */
-	private static boolean isEmptyFile(List<String> datas) throws IOException{
+	private boolean isEmptyFile() throws IOException{
 		
-		return true;
+		return getFileContents().isEmpty();
 	}
 	
 	
@@ -130,9 +243,16 @@ public class FileInputOutput {
 	 * @param format - takes in a format of how the string should appear.
 	 * @param args - any number of arguments that would be used by the format
 	 */	
-	private static void printMsg(String format, Object... args )
+	private String returnMsg(boolean isPrintRequired,String format, Object... args )
 	{
 		String msg = String.format(format, args);
-		System.out.println(msg);
+		
+		//If direct system.out of message to user is required
+		if(isPrintRequired){
+
+			System.out.println(msg);	
+		}
+		
+		return msg;
 	}
 }
