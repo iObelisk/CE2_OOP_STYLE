@@ -11,8 +11,6 @@ public class FileInputOutput {
 	
 	/*Declarations of Constants for "Magic Strings" */
 	private static final String MSG_INVALID_FILENAME = "Not a valid filename, please input a valid filename";
-	private static final String MSG_ADDED_TO_BUFFER = "Data(s) added to buffer";
-	private static final String MSG_NOT_ADDED_TO_BUFFER = "Data(s) NOT added to buffer";
 	private static final String MSG_EXIT_PROGRAME_FILEIO = "FileInputOutput - 'exit()' called! buffer closed";
 	private static final String MSG_EMPTY_FILE = "%s is empty";	
 	private static final String MSG_FILE_DELETED = "Deleted from \"%s\" - \"%s\" ";
@@ -86,7 +84,7 @@ public class FileInputOutput {
 		} 
 		catch (IOException e) {
 			
-			returnMsg(true,MSG_INVALID_FILENAME);
+			printMsg(true,MSG_INVALID_FILENAME);
 			return false;
 		}
 	}
@@ -100,7 +98,7 @@ public class FileInputOutput {
 	 */
 	public boolean createNewFile(String tempName) throws IOException{
 		
-		if(checkValidFileName(tempName)){
+		if (checkValidFileName(tempName)){
 			
 			fileWriter = new BufferedWriter(new FileWriter(file));
 			return true;
@@ -140,7 +138,7 @@ public class FileInputOutput {
 	 */
 	public List<String> getFileContents() throws IOException{
 		
-		//Stores current data(s) in file into a List to assist removal/retrival of object.
+		//Stores current data(s) in List to assist removal/retrival of object.
 		List<String> datas = Files.readAllLines(Paths.get(filename), 
 				Charset.forName("UTF-8"));
 		
@@ -155,28 +153,19 @@ public class FileInputOutput {
 	 * @throws IOException - if unable to write to fileWriter
 	 */
 	public boolean addContent(String data){	
-
-		//String returnMessage = "";
 		
 		try {
-			
-			//Write user 'add'(ed) data into buffer.			
+					
 			fileWriter.write(data.trim());
 			fileWriter.newLine();
-			//returnMessage = MSG_ADDED_TO_BUFFER;
 			return true;
 			
 		} catch (IOException e) {
 			
-			//returnMessage = MSG_NOT_ADDED_TO_BUFFER;
 			e.printStackTrace();
 			return false;
 		}
 		
-		//SHould sys out @ text buddy side
-		//System.out.println("added to " + filename + ": \"" + data.trim() +"\"");
-		
-		//return returnMessage;
 	}
 	
 	
@@ -187,40 +176,24 @@ public class FileInputOutput {
 	 * @throws IOException - if file can't be written to for saving purpose.
 	 */
 	public String deleteContent(int id) throws IOException{
-		//Should be in TextBuddy.java before calling this function
-		/*
-		// To ensure that user 'add'(s) are written to file first.
-		writeToFile(); 
-		*/
-		//Should be in TextBuddy.java before calling this function
-		/*
-		if((id-1) >= getFileContents().size() || (id-1) < 0) //Checks if input index out of scope
-		{
-			System.out.println("Deleting index out of scope, data does not exist.");
-		}
-		*/
-
+		
 		String deletedContent = "";
 		
-		if(!isEmptyFile())
-		{
+		if (!isEmptyFile()){
 			//Retrieving & Removing user selected data via specified id.
 			List<String> datas = getFileContents();	
+			
 			deletedContent = datas.get(id-1);
 			datas.remove(id-1);
 		
 			//Write updated data (with the deleted item gone).
 			modifyAllContents(datas);
-
-			//Should be in textbuddy class
-			//System.out.println("deleted from " + filename + ": \"" + deletedContent + "\"");
 		}
-		else
-		{
-			return returnMsg(false,MSG_EMPTY_FILE,filename);
+		else {
+			return printMsg(false,MSG_EMPTY_FILE,filename);
 		}
 		
-		return returnMsg(false,MSG_FILE_DELETED,filename,deletedContent);
+		return printMsg(false,MSG_FILE_DELETED,filename,deletedContent);
 	}
 	
 	
@@ -237,8 +210,8 @@ public class FileInputOutput {
 		clearAllContents();
 		
 		//Write new data into the buffer.
-		for(String data:datas)
-		{
+		for (String data:datas){
+			
 			fileWriter.write(data.trim());
 			fileWriter.newLine();
 		}
@@ -284,13 +257,14 @@ public class FileInputOutput {
 	
 	
 	/**
-	 * Prints the intended Message to user upon entering wrong command.
+	 * Returns the intended Message, upon entering wrong command or any other purposes
 	 * Also may used for debugging purposes.
 	 * 
+	 * @param isPrintRequired - if user specifies 'true' a system.out will be called
 	 * @param format - takes in a format of how the string should appear.
 	 * @param args - any number of arguments that would be used by the format
 	 */	
-	private String returnMsg(boolean isPrintRequired,String format, Object... args )
+	private String printMsg(boolean isPrintRequired,String format, Object... args )
 	{
 		String msg = String.format(format, args);
 		

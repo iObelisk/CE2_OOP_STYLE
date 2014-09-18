@@ -53,9 +53,9 @@ public class TextBuddy {
 				
 		try {
 			
-			if(dataStore.createNewFile(filename)){
+			if (dataStore.createNewFile(filename)){
 				
-				returnMsg(true,MSG_TEXTBUDDY_INITIATED,filename);
+				printMsg(true,MSG_TEXTBUDDY_INITIATED,filename);
 				return true;
 			}
 		
@@ -93,13 +93,13 @@ public class TextBuddy {
 		
 		String userCommand = null;
 		
-		do{
+		do {
 			System.out.print("Command:");
 			
 			userCommand = userInput.next();
 			
-			switch(userCommand)
-			{
+			switch (userCommand){
+				
 				case CMD_ADD:
 					
 					addContent(userInput.nextLine());
@@ -124,12 +124,12 @@ public class TextBuddy {
 					
 					if(!userCommand.equals(CMD_EXIT)){
 						
-						returnMsg(true,MSG_NO_CMD,userCommand);	
+						printMsg(true,MSG_NO_CMD,userCommand);	
 					}
 					break;
 			}
 			
-		}while(!userCommand.equals(CMD_EXIT));
+		} while (!userCommand.equals(CMD_EXIT));
 		
 		//Closes any object stream before exiting to prevent leaks
 		exit();
@@ -146,15 +146,14 @@ public class TextBuddy {
 	 */
 	public boolean addContent(String data){	
 		
-		if(data != null)
-		{
+		if (data != null){
 			boolean isAdded = dataStore.addContent(data);
 			
-			returnMsg(true,MSG_CONTENT_ADDED,dataStore.getFileName(),data.trim());
+			printMsg(true,MSG_CONTENT_ADDED,dataStore.getFileName(),data.trim());
 			return isAdded;
 		}
 		
-		returnMsg(true,MSG_EMPTY_CONTENT);
+		printMsg(true,MSG_EMPTY_CONTENT);
 		return false;
 	}
 	
@@ -176,7 +175,7 @@ public class TextBuddy {
 		//Display current data(s) in file.
 		if(datas.isEmpty()){
 			
-			returnMsg(true,MSG_EMPTY_FILE,dataStore.getFileName());
+			printMsg(true,MSG_EMPTY_FILE,dataStore.getFileName());
 			
 			return false;
 			
@@ -207,11 +206,11 @@ public class TextBuddy {
 		List<String> datas = dataStore.getFileContents();
 		
 		//Checks if input index out of scope
-		if((id-1) >= datas.size() || (id-1) < 0){
+		if ((id - 1) >= datas.size() || (id - 1) < 0){
 			
-			returnMsg(true,MSG_INDEX_OUTOFSCOPE);
+			printMsg(true,MSG_INDEX_OUTOFSCOPE);
 		}
-		else if(!datas.isEmpty()){
+		else if (!datas.isEmpty()){
 			
 			//Removing user selected data via specified id.
 			String deletedContent = datas.get(id-1);
@@ -219,12 +218,11 @@ public class TextBuddy {
 		
 			//Write updated data (with the deleted item gone).
 			dataStore.modifyAllContents(datas);
-			returnMsg(true,MSG_CONTENT_DELETED,dataStore.getFileName(),deletedContent);
+			printMsg(true,MSG_CONTENT_DELETED,dataStore.getFileName(),deletedContent);
 			
 		}
-		else
-		{
-			returnMsg(true,MSG_EMPTY_FILE,dataStore.getFileName());
+		else {
+			printMsg(true,MSG_EMPTY_FILE,dataStore.getFileName());
 		}
 	}
 
@@ -245,18 +243,19 @@ public class TextBuddy {
 	
 	
 	/**
-	 * Prints the intended Message to user upon entering wrong command.
+	 * Returns the intended Message, upon entering wrong command or any other purposes
 	 * Also may used for debugging purposes.
 	 * 
+	 * @param isPrintRequired - if user specifies 'true' a system.out will be called
 	 * @param format - takes in a format of how the string should appear.
 	 * @param args - any number of arguments that would be used by the format
 	 */	
-	private String returnMsg(boolean isPrintRequired,String format, Object... args )
+	private String printMsg(boolean isPrintRequired,String format, Object... args )
 	{
 		String msg = String.format(format, args);
 		
 		//If direct system.out of message to user is required
-		if(isPrintRequired){
+		if (isPrintRequired){
 
 			System.out.println(msg);	
 		}
