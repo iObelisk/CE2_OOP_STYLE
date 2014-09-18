@@ -25,6 +25,7 @@ public class TextBuddyTooTest {
 		
 		//TDD - Test Cases for TextBuddy.sort()
 		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord(""));
+		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord(null));
 	}
 	
 	
