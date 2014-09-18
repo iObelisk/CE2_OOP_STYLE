@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -20,6 +21,8 @@ public class TextBuddy {
 	private static final String MSG_CONTENT_DELETE = "Content deleted";
 	private static final String MSG_CONTENT_CLEARED = "Content cleared";
 	private static final String MSG_CONTENT_DISPLAY = "Content displayed";
+	private static final String MSG_PROMPT_CMD = "Command: ";
+	private static final String MSG_TEXTBUDDY_INITIATED = "Welcome To TextBuddy! Your file \"%s\" is ready for use.";
 	
 	/*Objects*/
 	FileInputOutput dataStore;
@@ -41,9 +44,23 @@ public class TextBuddy {
 	 * TextBuddy()'s initiator
 	 * 
 	 */
-	void TextBuddyInit(String filename){
+	public boolean init(String filename){
+				
+		try {
+			
+			if(dataStore.createNewFile(filename)){
+				
+				returnMsg(true,MSG_TEXTBUDDY_INITIATED,filename);
+				return true;
+			}
 		
-		//dataStore.createNewFile(filename);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			return false;
+		}
+		
+		return false;
 	}
 	
 	
@@ -66,24 +83,27 @@ public class TextBuddy {
 	 * required to close or delete to prevent leak.
 	 * 
 	 */
+	/*
 	private boolean firstRun(String filename){
 
 		System.out.print("Please input your filename: ");
 		
 		return false;
 	}
-	
+	*/
 	
 	
 	/**
 	 * TextBuddy()'s "run" is to start the whole programme running.
 	 * 
 	 */
-	public static int run(Scanner userInput){
+	public int run(Scanner userInput){
 		
 		String userCommand = "";
 		
 		do{
+			returnMsg(true,MSG_PROMPT_CMD);
+			
 			userCommand = userInput.next();
 			
 			switch(userCommand)
@@ -107,7 +127,7 @@ public class TextBuddy {
 				default:					
 					if(!userCommand.equals(CMD_EXIT))
 					{
-						printMsg(MSG_NO_CMD,userCommand);	
+						returnMsg(true,MSG_NO_CMD,userCommand);	
 					}
 					break;
 			}
@@ -178,9 +198,16 @@ public class TextBuddy {
 	 * @param format - takes in a format of how the string should appear.
 	 * @param args - any number of arguments that would be used by the format
 	 */	
-	private static void printMsg(String format, Object... args )
+	private String returnMsg(boolean isPrintRequired,String format, Object... args )
 	{
 		String msg = String.format(format, args);
-		System.out.println(msg);
+		
+		//If direct system.out of message to user is required
+		if(isPrintRequired){
+
+			System.out.println(msg);	
+		}
+		
+		return msg;
 	}
 }

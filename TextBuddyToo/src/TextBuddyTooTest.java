@@ -12,13 +12,19 @@ public class TextBuddyTooTest {
 
 	@Test
 	public void testExecuteCommand() throws IOException{
+				
+		//Test Cases - for textBuddy.init()
+		assertEquals("Test - 'TextBuddy.init()'", false, testTextBuddyInit("<>?"));
+		assertEquals("Test - 'TextBuddy.init()'", true, testTextBuddyInit("test"));
 		
-		assertEquals("Test - 'TextBuddy.addContent()'","Content added",TextBuddy.addContent("haha"));
-		assertEquals("Test - 'TextBuddy.clearContents()'","Content cleared",TextBuddy.clearContents());		
-		assertEquals("Test - 'TextBuddy.displayContents()'","Content displayed",TextBuddy.displayContents());
-		assertEquals("Test - 'TextBuddy.deleteContent()'","Content deleted",TextBuddy.deleteContent(1));	
+	}
+	
+	
+	public boolean testTextBuddyInit(String filename){
 		
+		TextBuddy tb = new TextBuddy();
 		
+		return tb.init(filename);
 	}
 	
 	

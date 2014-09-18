@@ -12,11 +12,10 @@ public class FileInputOutput {
 	
 	private static final String MSG_INVALID_FILENAME = "Not a valid filename, please input a valid filename";
 	private static final String MSG_ADDED_TO_BUFFER = "Data(s) added to buffer";
+	private static final String MSG_NOT_ADDED_TO_BUFFER = "Data(s) NOT added to buffer";
 	private static final String MSG_EXIT_PROGRAME_FILEIO = "FileInputOutput - 'exit()' called! buffer closed";
 	private static final String MSG_EMPTY_FILE = "%s is empty";	
 	private static final String MSG_FILE_DELETED = "Deleted from \"%s\" - \"%s\" ";
-	//System.out.println("deleted from " + filename + ": \"" + deletedContent + "\"");
-
 			
 	private static String filename;
 	
@@ -89,10 +88,15 @@ public class FileInputOutput {
 	 *
 	 * @throws IOException - if file can't be created (perhaps its opened etc.)
 	 */
-	public boolean createNewFile() throws IOException{
+	public boolean createNewFile(String tempName) throws IOException{
 		
-		fileWriter = new BufferedWriter(new FileWriter(file));
-		return true;
+		if(checkValidFileName(tempName)){
+			
+			fileWriter = new BufferedWriter(new FileWriter(file));
+			return true;
+		}
+		
+		return false;
 	}
 	
 	
@@ -102,10 +106,18 @@ public class FileInputOutput {
 	 * 
 	 * @throws IOException 
 	 */
-	public boolean writeToFile() throws IOException{
+	public boolean writeToFile(){
 		
-		fileWriter.flush();
-		return true;
+		try {
+			
+			fileWriter.flush();
+			return true;
+			
+		} catch (IOException e) {
+			
+			return false;
+		}
+		
 	}
 
 	
@@ -132,16 +144,29 @@ public class FileInputOutput {
 	 * 
 	 * @throws IOException - if unable to write to fileWriter
 	 */
-	private String addContent(String data) throws IOException 
-	{	
-		//Write user 'add'(ed) data into buffer.
-		fileWriter.write(data.trim());
-		fileWriter.newLine();
+	public boolean addContent(String data){	
+
+		//String returnMessage = "";
+		
+		try {
+			
+			//Write user 'add'(ed) data into buffer.			
+			fileWriter.write(data.trim());
+			fileWriter.newLine();
+			//returnMessage = MSG_ADDED_TO_BUFFER;
+			return true;
+			
+		} catch (IOException e) {
+			
+			//returnMessage = MSG_NOT_ADDED_TO_BUFFER;
+			e.printStackTrace();
+			return false;
+		}
 		
 		//SHould sys out @ text buddy side
 		//System.out.println("added to " + filename + ": \"" + data.trim() +"\"");
 		
-		return MSG_ADDED_TO_BUFFER;
+		//return returnMessage;
 	}
 	
 	
@@ -218,10 +243,19 @@ public class FileInputOutput {
 	 * 
 	 * @throws IOException - if file can't be close/created.
 	 */
-	public void clearAllContents() throws IOException{
+	public boolean clearAllContents(){
 		
-		fileWriter.close();
-		createNewFile();
+		try {
+
+			fileWriter.close();
+			createNewFile(filename);
+			return true;
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();		
+			return false;
+		}
 	}
 	
 	
