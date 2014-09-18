@@ -84,7 +84,7 @@ public class FileInputOutput {
 		} 
 		catch (IOException e) {
 			
-			printMsg(true,MSG_INVALID_FILENAME);
+			returnMsg(true,MSG_INVALID_FILENAME);
 			return false;
 		}
 	}
@@ -190,10 +190,10 @@ public class FileInputOutput {
 			modifyAllContents(datas);
 		}
 		else {
-			return printMsg(false,MSG_EMPTY_FILE,filename);
+			return returnMsg(false,MSG_EMPTY_FILE,filename);
 		}
 		
-		return printMsg(false,MSG_FILE_DELETED,filename,deletedContent);
+		return returnMsg(false,MSG_FILE_DELETED,filename,deletedContent);
 	}
 	
 	
@@ -264,8 +264,8 @@ public class FileInputOutput {
 	 * @param format - takes in a format of how the string should appear.
 	 * @param args - any number of arguments that would be used by the format
 	 */	
-	private String printMsg(boolean isPrintRequired,String format, Object... args )
-	{
+	private String returnMsg(boolean isPrintRequired,String format, Object... args ){
+		
 		String msg = String.format(format, args);
 		
 		//If direct system.out of message to user is required

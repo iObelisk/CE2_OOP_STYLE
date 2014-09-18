@@ -71,6 +71,7 @@ public class TextBuddyTooTest {
 	public String testTextBuddySort(List<String> datas) throws IOException{
 		
 		TextBuddy tb = new TextBuddy();
+		tb.init("newTestFile.txt");
 		
 		return tb.sortContents(datas).toString();
 	}	

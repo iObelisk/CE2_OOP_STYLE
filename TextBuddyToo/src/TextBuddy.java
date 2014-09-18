@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,9 +20,10 @@ public class TextBuddy {
 	/*Declarations of Constants for "Magic Strings" */
 	private static final String MSG_NO_CMD = "No such command \"%s\" " ;
 	private static final String MSG_CONTENT_ADDED = "added to \"%s\" - \"%s\"";
-	private static final String MSG_EMPTY_CONTENT = "Invalid input|data - Empty content";
+	private static final String MSG_EMPTY_CONTENT = "Invalid input|data|list of contens - Empty content";
 	private static final String MSG_CONTENT_DELETED = "deleted from \"%s\": \"%s\"";
-	private static final String MSG_CONTENT_CLEARED = "Content cleared";
+	private static final String MSG_CONTENT_CLEARED = "All content(s) cleared from \"%s\"";
+	private static final String MSG_CONTENT_SORTED = "All content(s) from \"%s\" sorted ";
 	private static final String MSG_EMPTY_FILE = "File \"%s\" is empty";
 	private static final String MSG_INDEX_OUTOFSCOPE = "Index specified out of scope";
 	private static final String MSG_TEXTBUDDY_INITIATED = "Welcome To TextBuddy! Your file \"%s\" is ready for use.";
@@ -59,7 +59,7 @@ public class TextBuddy {
 			
 			if (dataStore.createNewFile(filename)){
 				
-				printMsg(true,MSG_TEXTBUDDY_INITIATED,filename);
+				printMsg(MSG_TEXTBUDDY_INITIATED,filename);
 				return true;
 			}
 		
@@ -136,7 +136,7 @@ public class TextBuddy {
 					
 					if(!userCommand.equals(CMD_EXIT)){
 						
-						printMsg(true,MSG_NO_CMD,userCommand);	
+						printMsg(MSG_NO_CMD,userCommand);	
 					}
 					break;
 			}
@@ -161,11 +161,11 @@ public class TextBuddy {
 		if (data != null){
 			boolean isAdded = dataStore.addContent(data);
 			
-			printMsg(true,MSG_CONTENT_ADDED,dataStore.getFileName(),data.trim());
+			printMsg(MSG_CONTENT_ADDED,dataStore.getFileName(),data.trim());
 			return isAdded;
 		}
 		
-		printMsg(true,MSG_EMPTY_CONTENT);
+		printMsg(MSG_EMPTY_CONTENT);
 		return false;
 	}
 	
@@ -185,7 +185,7 @@ public class TextBuddy {
 		//Display current data(s) in file.
 		if(datas.isEmpty()){
 			
-			printMsg(true,MSG_EMPTY_FILE,dataStore.getFileName());
+			printMsg(MSG_EMPTY_FILE,dataStore.getFileName());
 			
 			return false;
 			
@@ -218,7 +218,7 @@ public class TextBuddy {
 		//Checks if input index out of scope
 		if ((id - 1) >= datas.size() || (id - 1) < 0){
 			
-			printMsg(true,MSG_INDEX_OUTOFSCOPE);
+			printMsg(MSG_INDEX_OUTOFSCOPE);
 		}
 		else if (!datas.isEmpty()){
 			
@@ -228,11 +228,11 @@ public class TextBuddy {
 		
 			//Write updated data (with the deleted item gone).
 			dataStore.modifyAllContents(datas);
-			printMsg(true,MSG_CONTENT_DELETED,dataStore.getFileName(),deletedContent);
+			printMsg(MSG_CONTENT_DELETED,dataStore.getFileName(),deletedContent);
 			
 		}
 		else {
-			printMsg(true,MSG_EMPTY_FILE,dataStore.getFileName());
+			printMsg(MSG_EMPTY_FILE,dataStore.getFileName());
 		}
 	}
 
@@ -247,6 +247,7 @@ public class TextBuddy {
 	public String clearContents(){
 		
 		dataStore.clearAllContents();
+		printMsg(MSG_CONTENT_CLEARED,dataStore.getFileName());
 		return MSG_CONTENT_CLEARED;
 	}
 	
@@ -263,7 +264,7 @@ public class TextBuddy {
 		
 		if (queryWord == null || queryWord.isEmpty() || datas == null || datas.isEmpty()){
 			
-			printMsg(true,MSG_EMPTY_CONTENT);
+			printMsg(MSG_EMPTY_CONTENT);
 			return false;
 		}
 		
@@ -271,12 +272,12 @@ public class TextBuddy {
 			
 			if (data.contains(queryWord)){
 				
-				printMsg(true, MSG_WORD_FOUND, queryWord);
+				printMsg(MSG_WORD_FOUND, queryWord);
 				return true;
 			}
 		}
 		
-		printMsg(true, MSG_WORD_NOT_FOUND, queryWord);
+		printMsg(MSG_WORD_NOT_FOUND, queryWord);
 		return false;
 	}
 	
@@ -293,7 +294,16 @@ public class TextBuddy {
 	
 		List<String> newList = originalList;
 		
-		Collections.sort(newList);
+		if(originalList == null || originalList.isEmpty())
+		{
+			printMsg(MSG_EMPTY_CONTENT);
+			
+		}else{
+		
+			Collections.sort(newList);
+			dataStore.modifyAllContents(newList);
+			printMsg(MSG_CONTENT_SORTED, dataStore.getFileName());
+		}
 		
 		return newList;
 		
@@ -305,19 +315,13 @@ public class TextBuddy {
 	 * Returns the intended Message, upon entering wrong command or any other purposes
 	 * Also may used for debugging purposes.
 	 * 
-	 * @param isPrintRequired - if user specifies 'true' a system.out will be called
 	 * @param format - takes in a format of how the string should appear.
 	 * @param args - any number of arguments that would be used by the format
 	 */	
-	private String printMsg(boolean isPrintRequired,String format, Object... args )
-	{
-		String msg = String.format(format, args);
+	private String printMsg(String format, Object... args ){
 		
-		//Calls system.out if printing of message to user is required.
-		if (isPrintRequired){
-
-			System.out.println(msg);	
-		}
+		String msg = String.format(format, args);
+		System.out.println(msg);	
 		
 		return msg;
 	}
