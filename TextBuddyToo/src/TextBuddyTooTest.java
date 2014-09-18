@@ -48,6 +48,12 @@ public class TextBuddyTooTest {
 	}
 	
 	
+	
+	/**
+	 * Test for test buddy init function, mainly to test for filename checking
+	 * 
+	 * @param filename - user input filename
+	 */	
 	public boolean testTextBuddyInit(String filename){
 		
 		TextBuddy tb = new TextBuddy();
@@ -55,12 +61,30 @@ public class TextBuddyTooTest {
 		return tb.init(filename);
 	}
 	
+	
+	
+	/**
+	 * Test for test buddy add function, mainly to test for 
+	 * error checking when adding
+	 * 
+	 * @param userInput - user input
+	 */	
 	public boolean testTextBuddyAdd(String userInput){
 		
 		TextBuddy tb = new TextBuddy();
 		return tb.addContent(userInput);
 	}
 	
+	
+	
+	/**
+	 * Test for test buddy searchWord function, mainly to apply
+	 * TDD - Test Driven Development :)
+	 * 
+	 * 
+	 * @param queryWord - word that the user input to search for.
+	 * @param datas - the list of "add"ed contents in list
+	 */
 	public boolean testTextBuddySearchWord(String queryWord, List<String> datas) throws IOException{
 		
 		TextBuddy tb = new TextBuddy();
@@ -68,6 +92,14 @@ public class TextBuddyTooTest {
 		return tb.searchWord(queryWord,datas);
 	}
 	
+	
+	
+	/**
+	 * Test for test buddy sort function, mainly to apply
+	 * TDD - Test Driven Development :)
+	 * 
+	 * @param datas - the list of "add"ed contents in list
+	 */	
 	public String testTextBuddySort(List<String> datas) throws IOException{
 		
 		TextBuddy tb = new TextBuddy();
