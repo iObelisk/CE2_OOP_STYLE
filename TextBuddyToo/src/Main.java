@@ -2,8 +2,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-public class main {
+public class Main {
 
+	private static final int EXIT_PROGRAM_CMD = -1;
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -12,18 +13,21 @@ public class main {
 		
 		boolean isInit = false;
 		
+
 		do{
 			
+			//Initializing textbuddy with a filename input from user			
 			isInit = textbuddy.init(sc.next());
 			
 		}while(isInit == false);
 		
-		System.out.println("I'm outta here");
+		//TextBuddy will continue asking for user input until 'exit' is called
+		while(textbuddy.run(sc) != EXIT_PROGRAM_CMD);
 		
-		
-		while(textbuddy.run(sc) != -1);
 		textbuddy.exit();
 		sc.close();
+		
+		System.out.println("Bye Bye!");
 		
 		
 		

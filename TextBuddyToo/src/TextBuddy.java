@@ -116,7 +116,7 @@ public class TextBuddy {
 	
 				case CMD_CLEAR:
 					
-					//clearContents(true);
+					clearContents();
 					break;
 				
 				default:					
@@ -233,8 +233,9 @@ public class TextBuddy {
 	 * 
 	 *
 	 */
-	public static String clearContents(){
+	public String clearContents(){
 		
+		dataStore.clearAllContents();
 		return MSG_CONTENT_CLEARED;
 	}
 	

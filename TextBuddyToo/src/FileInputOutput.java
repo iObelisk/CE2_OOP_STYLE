@@ -255,6 +255,9 @@ public class FileInputOutput {
 	 */
 	public boolean clearAllContents(){
 		
+		// To ensure that user 'add'(s) are written to file first.
+		writeToFile(); 
+		
 		try {
 
 			fileWriter.close();
