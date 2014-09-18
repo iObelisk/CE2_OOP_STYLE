@@ -17,7 +17,8 @@ public class TextBuddy {
 
 	/*Declarations of Constants for "Magic Strings" */
 	private static final String MSG_NO_CMD = "No such command \"%s\" " ;
-	private static final String MSG_CONTENT_ADDED = "Content added";
+	private static final String MSG_CONTENT_ADDED = "added to \"%s\" - \"%s\"";
+	private static final String MSG_EMPTY_CONTENT = "Invalid input after specified command";
 	private static final String MSG_CONTENT_DELETE = "Content deleted";
 	private static final String MSG_CONTENT_CLEARED = "Content cleared";
 	private static final String MSG_CONTENT_DISPLAY = "Content displayed";
@@ -87,10 +88,10 @@ public class TextBuddy {
 	 */
 	public int run(Scanner userInput){
 		
-		String userCommand = "";
+		String userCommand = null;
 		
 		do{
-			returnMsg(true,MSG_PROMPT_CMD);
+			System.out.print("Command:");
 			
 			userCommand = userInput.next();
 			
@@ -133,9 +134,18 @@ public class TextBuddy {
 	 * 
 	 * @throws IOException - if unable to write to fileWriter
 	 */
-	public static String addContent(String data){	
+	public boolean addContent(String data){	
 		
-		return MSG_CONTENT_ADDED;
+		if(data != null)
+		{
+			boolean isAdded = dataStore.addContent(data);
+			
+			returnMsg(true,MSG_CONTENT_ADDED,dataStore.getFileName(),data.trim());
+			return isAdded;
+		}
+		
+		returnMsg(true,MSG_EMPTY_CONTENT);
+		return false;
 	}
 	
 	
@@ -147,6 +157,7 @@ public class TextBuddy {
 	 * @throws IOException - if file can't be written to for saving purpose.
 	 */
 	public static String displayContents(){
+		
 		
 		return MSG_CONTENT_DISPLAY;
 	}

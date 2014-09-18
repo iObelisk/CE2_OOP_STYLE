@@ -59,6 +59,16 @@ public class FileInputOutput {
 	
 	
 	/**
+	 * Get the filename from when initialized return to the call
+	 * 
+	 */
+	public String getFileName(){
+		
+		return filename;
+	}
+	
+	
+	/**
 	 * Checks for valid filename that user has input.
 	 * 
 	 * @return true = valid | false = invalid filename.
