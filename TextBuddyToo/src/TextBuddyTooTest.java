@@ -25,11 +25,9 @@ public class TextBuddyTooTest {
 		assertEquals("Test - 'TextBuddy.addContent()'",true,testTextBuddyAdd("test"));
 		
 		
-		//List to be used for sort/search testcases below
+		//List(s) to be used for sort/search testcases below
 		List<String> dataList = new LinkedList<String>();
-		dataList.add("test3");
 		dataList.add("test1");
-		dataList.add("test2");
 		
 		
 		//TDD - Test Cases for TextBuddy.searchWord()
@@ -40,8 +38,13 @@ public class TextBuddyTooTest {
 		
 		
 		//TDD - Test Cases for TextBuddy.sort()
+		dataList.clear();
 		assertEquals("Test - 'TextBuddy.sortContents()'","[]",testTextBuddySort(dataList));		
-		assertEquals("Test - 'TextBuddy.sortContents()'","[test1,test2,test3]",testTextBuddySort(dataList));
+		
+		dataList.add("test1");
+		dataList.add("test3");
+		dataList.add("test2");
+		assertEquals("Test - 'TextBuddy.sortContents()'","[test1, test2, test3]",testTextBuddySort(dataList));
 	}
 	
 	

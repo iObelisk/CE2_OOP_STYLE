@@ -291,8 +291,9 @@ public class TextBuddy {
 	 */	
 	public List<String> sortContents(List<String> originalList) throws IOException{
 	
-		List<String> newList = new LinkedList<String>();
+		List<String> newList = originalList;
 		
+		Collections.sort(newList);
 		
 		return newList;
 		
