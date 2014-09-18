@@ -73,11 +73,12 @@ public class TextBuddy {
 	/**
 	 * TextBuddy()'s "destructor" ensures that open objects are closed if 
 	 * required to close or delete to prevent leak.
+	 * @throws IOException 
 	 * 
 	 */
-	public boolean exit(){
+	boolean exit() throws IOException{
 		
-		
+		dataStore.exit();
 		return true;
 	}
 	
@@ -130,6 +131,8 @@ public class TextBuddy {
 			
 		}while(!userCommand.equals(CMD_EXIT));
 		
+		//Closes any object stream before exiting to prevent leaks
+		exit();
 		return CMD_EXIT_KEY;
 		
 	}

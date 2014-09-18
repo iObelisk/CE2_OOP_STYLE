@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FileInputOutput {
 	
-	
+	/*Declarations of Constants for "Magic Strings" */
 	private static final String MSG_INVALID_FILENAME = "Not a valid filename, please input a valid filename";
 	private static final String MSG_ADDED_TO_BUFFER = "Data(s) added to buffer";
 	private static final String MSG_NOT_ADDED_TO_BUFFER = "Data(s) NOT added to buffer";
