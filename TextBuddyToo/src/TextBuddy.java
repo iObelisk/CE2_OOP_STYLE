@@ -251,9 +251,9 @@ public class TextBuddy {
 	 * 				  for the queried string
 	 * @throws IOException 
 	 */	
-	public boolean searchWord(String checkString){
+	public boolean searchWord(String checkString, List<String> datas) throws IOException{
 		
-		if (checkString == null || checkString.isEmpty()){
+		if (checkString == null || checkString.isEmpty() || datas == null || datas.isEmpty()){
 			
 			return false;
 		}

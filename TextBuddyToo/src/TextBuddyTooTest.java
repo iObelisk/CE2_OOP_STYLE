@@ -1,6 +1,8 @@
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,8 +26,13 @@ public class TextBuddyTooTest {
 		
 		
 		//TDD - Test Cases for TextBuddy.sort()
-		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord(""));
-		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord(null));
+		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord("",null));
+		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord(null,null));
+		
+		List<String> dataList = new LinkedList<String>();
+		dataList.add("test1");
+		
+		assertEquals("Test - 'TextBuddy.searchWord()'",true,testTextBuddySearchWord("test1",dataList));
 	}
 	
 	
@@ -42,10 +49,11 @@ public class TextBuddyTooTest {
 		return tb.addContent(userInput);
 	}
 	
-	public boolean testTextBuddySearchWord(String queryWord){
+	public boolean testTextBuddySearchWord(String queryWord, List<String> datas) throws IOException{
 		
 		TextBuddy tb = new TextBuddy();
-		return tb.searchWord(queryWord);
+		
+		return tb.searchWord(queryWord,datas);
 	}
 	
 }
