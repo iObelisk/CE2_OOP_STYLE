@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,7 +13,7 @@ public class TextBuddy {
 	private static final String CMD_DELETE = "delete";
 	private static final String CMD_CLEAR = "clear";
 	private static final String CMD_EXIT = "exit";
-	private static final String CMD_CHECK = "check";
+	private static final String CMD_SEARCH = "search";
 	private static final String CMD_SORT = "sort";
 	private static final int CMD_EXIT_KEY = -1;
 	
@@ -107,10 +109,12 @@ public class TextBuddy {
 					break;
 	
 				case CMD_DISPLAY:
+					dataStore.writeToFile();
 					displayContents();
 					break;
 					
 				case CMD_DELETE:
+					dataStore.writeToFile();
 					deleteContent(userInput.nextInt());
 					break;
 	
@@ -118,10 +122,14 @@ public class TextBuddy {
 					clearContents();
 					break;
 					
-				case CMD_CHECK:
+				case CMD_SEARCH:
+					dataStore.writeToFile();
+					searchWord(userInput.next(),dataStore.getFileContents());
 					break;
 					
 				case CMD_SORT:
+					dataStore.writeToFile();
+					sortContents(dataStore.getFileContents());
 					break;		
 					
 				default:					
@@ -171,8 +179,6 @@ public class TextBuddy {
 	 * @throws IOException - if contents can't be extracted from file. 
 	 */
 	public boolean displayContents() throws IOException{
-		
-		dataStore.writeToFile();
 		
 		List<String> datas = dataStore.getFileContents();
 		
@@ -274,6 +280,23 @@ public class TextBuddy {
 		return false;
 	}
 	
+	
+	
+	/**
+	 * Sorts the display list that user has 'add'ed previously - alphabetically
+	 * and saves it to the storage file indicated at the start of the program
+	 * 
+	 * @param originalList - takes in the list to be sorted
+	 * @throws IOException 
+	 */	
+	public static List<String> sortContents(List<String> originalList) throws IOException{
+	
+		List<String> newList = new LinkedList<String>();
+		
+		
+		return newList;
+		
+	}
 	
 	
 	

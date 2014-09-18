@@ -25,7 +25,7 @@ public class TextBuddyTooTest {
 		assertEquals("Test - 'TextBuddy.addContent()'",true,testTextBuddyAdd("test"));
 		
 		
-		//TDD - Test Cases for TextBuddy.sort()
+		//TDD - Test Cases for TextBuddy.searchWord()
 		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord("",null));
 		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord(null,null));
 		
@@ -34,6 +34,10 @@ public class TextBuddyTooTest {
 		
 		assertEquals("Test - 'TextBuddy.searchWord()'",true,testTextBuddySearchWord("test1",dataList));
 		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord("test2",dataList));
+		
+		
+		//TDD - Test Cases for TextBuddy.sort()
+		assertEquals("Test - 'TextBuddy.sortContents()'",null,testTextBuddySort(dataList));
 	}
 	
 	
@@ -56,5 +60,12 @@ public class TextBuddyTooTest {
 		
 		return tb.searchWord(queryWord,datas);
 	}
+	
+	public List<String> testTextBuddySort(List<String> datas) throws IOException{
+		
+		TextBuddy tb = new TextBuddy();
+		
+		return tb.sortContents(datas);
+	}	
 	
 }
