@@ -21,7 +21,10 @@ public class TextBuddyTooTest {
 		assertEquals("Test - 'TextBuddy.addContent()'",false,testTextBuddyAdd(null));		
 		assertEquals("Test - 'TextBuddy.addContent()'",true,testTextBuddyAdd(""));
 		assertEquals("Test - 'TextBuddy.addContent()'",true,testTextBuddyAdd("test"));
-
+		
+		
+		//TDD - Test Cases for TextBuddy.sort()
+		assertEquals("Test - 'TextBuddy.searchWord()'",false,testTextBuddySearchWord(""));
 	}
 	
 	
@@ -38,6 +41,10 @@ public class TextBuddyTooTest {
 		return tb.addContent(userInput);
 	}
 	
-	
+	public boolean testTextBuddySearchWord(String queryWord){
+		
+		TextBuddy tb = new TextBuddy();
+		return tb.searchWord(queryWord);
+	}
 	
 }
