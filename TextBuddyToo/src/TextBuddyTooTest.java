@@ -40,7 +40,6 @@ public class TextBuddyTooTest {
 	public boolean testTextBuddyAdd(String userInput){
 		
 		TextBuddy tb = new TextBuddy();
-		
 		return tb.addContent(userInput);
 	}
 	

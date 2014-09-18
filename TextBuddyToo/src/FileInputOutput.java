@@ -138,7 +138,7 @@ public class FileInputOutput {
 	 * @return the list of data(s)
 	 * @throws IOException 
 	 */
-	private List<String> getFileContents() throws IOException{
+	public List<String> getFileContents() throws IOException{
 		
 		//Stores current data(s) in file into a List to assist removal/retrival of object.
 		List<String> datas = Files.readAllLines(Paths.get(filename), 
@@ -231,7 +231,7 @@ public class FileInputOutput {
 	 * 
 	 * @throws IOException 
 	 */
-	private void modifyAllContents(List<String> datas) throws IOException{
+	public void modifyAllContents(List<String> datas) throws IOException{
 		
 		//Clear data from file to prevent duplicates.
 		clearAllContents();
