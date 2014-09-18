@@ -37,7 +37,7 @@ public class TextBuddyTooTest {
 		
 		
 		//TDD - Test Cases for TextBuddy.sort()
-		assertEquals("Test - 'TextBuddy.sortContents()'",null,testTextBuddySort(dataList));
+		assertEquals("Test - 'TextBuddy.sortContents()'","[]",testTextBuddySort(dataList));
 	}
 	
 	
@@ -61,11 +61,11 @@ public class TextBuddyTooTest {
 		return tb.searchWord(queryWord,datas);
 	}
 	
-	public List<String> testTextBuddySort(List<String> datas) throws IOException{
+	public String testTextBuddySort(List<String> datas) throws IOException{
 		
 		TextBuddy tb = new TextBuddy();
 		
-		return tb.sortContents(datas);
+		return tb.sortContents(datas).toString();
 	}	
 	
 }

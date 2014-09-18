@@ -289,7 +289,7 @@ public class TextBuddy {
 	 * @param originalList - takes in the list to be sorted
 	 * @throws IOException 
 	 */	
-	public static List<String> sortContents(List<String> originalList) throws IOException{
+	public List<String> sortContents(List<String> originalList) throws IOException{
 	
 		List<String> newList = new LinkedList<String>();
 		
