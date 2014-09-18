@@ -253,7 +253,7 @@ public class TextBuddy {
 	 */	
 	public boolean searchWord(String checkString){
 		
-		if (checkString.isEmpty()){
+		if (checkString == null || checkString.isEmpty()){
 			
 			return false;
 		}
