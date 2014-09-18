@@ -12,12 +12,6 @@ public class TextBuddyTooTest {
 	@Test
 	public void testExecuteCommand() throws IOException{
 		
-		/*
-		assertEquals("Test - 'TextBuddy.clearContents()'","Content cleared",TextBuddy.clearContents());		
-		assertEquals("Test - 'TextBuddy.displayContents()'","Content displayed",TextBuddy.displayContents());
-		assertEquals("Test - 'TextBuddy.deleteContent()'","Content deleted",TextBuddy.deleteContent(1));	
-		*/
-		
 		//Test Cases - for textBuddy.init()
 		assertEquals("Test - 'TextBuddy.init()'", false, testTextBuddyInit("<>?"));
 		assertEquals("Test - 'TextBuddy.init()'", true, testTextBuddyInit("test"));
@@ -27,6 +21,7 @@ public class TextBuddyTooTest {
 		assertEquals("Test - 'TextBuddy.addContent()'",false,testTextBuddyAdd(null));		
 		assertEquals("Test - 'TextBuddy.addContent()'",true,testTextBuddyAdd(""));
 		assertEquals("Test - 'TextBuddy.addContent()'",true,testTextBuddyAdd("test"));
+
 	}
 	
 	
@@ -42,5 +37,7 @@ public class TextBuddyTooTest {
 		TextBuddy tb = new TextBuddy();
 		return tb.addContent(userInput);
 	}
+	
+	
 	
 }

@@ -101,25 +101,27 @@ public class TextBuddy {
 			switch (userCommand){
 				
 				case CMD_ADD:
-					
 					addContent(userInput.nextLine());
 					break;
 	
 				case CMD_DISPLAY:
-					
 					displayContents();
 					break;
 					
 				case CMD_DELETE:
-					
 					deleteContent(userInput.nextInt());
 					break;
 	
 				case CMD_CLEAR:
-					
 					clearContents();
 					break;
-				
+					
+				case CMD_CHECK:
+					break;
+					
+				case CMD_SORT:
+					break;		
+					
 				default:					
 					
 					if(!userCommand.equals(CMD_EXIT)){
@@ -241,6 +243,21 @@ public class TextBuddy {
 	}
 	
 	
+	/**
+	 * Check if word queried is within the 'add'ed contents
+     *
+	 * @param checkString - the string that the user input to query about
+	 * @param datas - the list of contents already 'add'ed to check upon 
+	 * 				  for the queried string
+	 * @throws IOException 
+	 */	
+	public boolean searchWord(String checkString){
+		
+		return true;
+	}
+	
+	
+	
 	
 	/**
 	 * Returns the intended Message, upon entering wrong command or any other purposes
@@ -254,7 +271,7 @@ public class TextBuddy {
 	{
 		String msg = String.format(format, args);
 		
-		//If direct system.out of message to user is required
+		//Calls system.out if printing of message to user is required.
 		if (isPrintRequired){
 
 			System.out.println(msg);	
