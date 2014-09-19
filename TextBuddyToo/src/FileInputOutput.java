@@ -1,10 +1,12 @@
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.io.BufferedWriter;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.charset.Charset;
+
 import java.util.List;
 
 public class FileInputOutput {
@@ -14,12 +16,14 @@ public class FileInputOutput {
 	private static final String MSG_EXIT_PROGRAME_FILEIO = "FileInputOutput - 'exit()' called! buffer closed";
 	private static final String MSG_EMPTY_FILE = "%s is empty";	
 	private static final String MSG_FILE_DELETED = "Deleted from \"%s\" - \"%s\" ";
-			
-	private static String filename;
 	
+	/*Declarations of Entities */
 	private static File file;
 	private static BufferedWriter fileWriter;
-	
+
+	/*Declarations of Variables */	
+	private static String filename;
+
 	
 	/**
 	 * Constructor of the 'FileInputOutput'

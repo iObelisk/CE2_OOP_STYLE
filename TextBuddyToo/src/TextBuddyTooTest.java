@@ -1,16 +1,19 @@
-import org.junit.Test;
-
 import java.io.IOException;
-import java.util.LinkedList;
+
 import java.util.List;
+import java.util.LinkedList;
 
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-
 
 
 public class TextBuddyTooTest {
 
-
+	/**
+	 * Test cases for TextBuddy Program
+	 * 
+	 * @param filename - user input filename
+	 */	
 	@Test
 	public void testExecuteCommand() throws IOException{
 		
