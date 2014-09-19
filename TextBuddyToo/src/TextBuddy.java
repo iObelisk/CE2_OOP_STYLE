@@ -19,6 +19,7 @@ public class TextBuddy {
 
 	/*Declarations of Constants for "Magic Strings" */
 	private static final String MSG_NO_CMD = "No such command \"%s\" " ;
+	private static final String MSG_CMD_PROMPT = "Command: ";
 	private static final String MSG_CONTENT_ADDED = "added to \"%s\" - \"%s\"";
 	private static final String MSG_EMPTY_CONTENT = "Invalid input|data|list of contens - Empty content";
 	private static final String MSG_CONTENT_DELETED = "deleted from \"%s\": \"%s\"";
@@ -98,8 +99,8 @@ public class TextBuddy {
 		String userCommand = null;
 		
 		do {
-			System.out.print("Command:");
 			
+			printMsg(MSG_CMD_PROMPT);
 			userCommand = userInput.next();
 			
 			switch (userCommand){
